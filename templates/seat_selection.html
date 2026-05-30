@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seat Selection</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="seat-container">
+
+    <a href="/home/" class="back-link">
+
+        <button class="back-btn">
+            ←
+        </button>
+
+    </a>
+
+    <h1>{{ movie.title }}</h1>
+    <h2>{{ show.timing }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for row in rows %}
+        <div class="seat-row">
+
+            {% for seat in cols %}
+
+            {% with seat_id=row|add:seat %}
+
+            <input
+                type="checkbox"
+                name="selected_seats"
+                value="{{ seat_id }}"
+                id="{{ seat_id }}"
+                class="seat-checkbox"
+
+                {% if seat_id in booked_seats %}
+                    disabled
+                {% endif %}
+            >
+
+            <label
+                for="{{ seat_id }}"
+                class="
+                    seat-label
+                    {% if seat_id in booked_seats %}
+                        booked
+                    {% endif %}
+                "
+            >
+                {{ seat_id }}
+            </label>
+
+            {% endwith %}
+
+            {% endfor %}
+
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="book-btn">
+            Book Tickets
+        </button>
+
+        {% if messages %}
+
+    {% for message in messages %}
+
+        <div class="success-message">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+    </form>
+
+</div>
+
+</body>
+</html>

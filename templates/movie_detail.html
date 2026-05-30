@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.title }}</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <div class="movie-detail-container">
+
+        <img src="{{ movie.image.url }}" class="detail-image">
+
+        <div class="detail-info">
+
+            <h1>{{ movie.title }}</h1>
+
+            <p>{{ movie.description }}</p>
+
+            <p><strong>Language:</strong> {{ movie.language }}</p>
+
+            <p><strong>Duration:</strong> {{ movie.duration }}</p>
+
+            <h2>Show Timings</h2>
+
+            <div class="show-container">
+
+                {% for show in shows %}
+
+                <a href="{% url 'seat_selection' movie.id show.id %}">
+                    <button class="show-btn">
+                        {{ show.timing }}
+                    </button>
+                </a>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
